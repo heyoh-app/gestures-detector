@@ -1,6 +1,6 @@
 experiment_name: cleanup
 
-split: splits/split.json
+split: data/split.json
 
 train_data_params:
     size: &SIZE 128

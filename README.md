@@ -21,7 +21,7 @@ conda activate heyoh
 ```
 2. Install requirements:
 ```
-pip3 install -r requirements.txt
+pip3 install -r multitask_lightning/requirements.txt
 ```
 
 ### Training
@@ -35,7 +35,7 @@ nano configs/train_config.yaml
 ```
 3. Run training:
 ```
-python train.py multitask_lightning/configs/train_config.yaml
+python train.py configs/train_config.yaml
 ```
 
 ### Usage UPDATED FOR APPLE M1 SUPPORT
