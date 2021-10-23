@@ -1,0 +1,2 @@
+data/images/*.jpg filter=lfs diff=lfs merge=lfs -text
+checkpoints/*.ckpt filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,84 @@
+experiment_name: cleanup
+
+split: splits/split.json
+
+train_data_params:
+    size: &SIZE 128
+    scope: strong
+    size_transform: train
+    images_folder: &FOLDER data/images
+    subclasses: &SUBCLASES [2, 3]
+    radius_weights: &RADIUS_WEIGHTS [1.0, 2.0]   # for keypoint gaussians
+    output_stride: &OUT_STRIDE 2
+
+val_data_params:
+    size: *SIZE
+    scope: weak
+    size_transform: val
+    images_folder: *FOLDER
+    subclasses: *SUBCLASES
+    radius_weights: *RADIUS_WEIGHTS
+    output_stride: *OUT_STRIDE
+
+model:
+  encoder_name: mobilenet_v2_clipped
+  encoder_depth: 4
+  decoder_depth: 3
+  decoder_channels: [128, 64, 32]
+  classes: 7   # all subclasses + size + side
+  encoder_weights: imagenet
+  in_channels: 3
+
+model_checkpoint:
+  dirpath: checkpoint
+  filename: '{epoch:03d}-{val_loss:.3f}-{val_map:.3f}'
+  save_top_k: 1
+  verbose: True
+  monitor: val_map
+  mode: max
+
+losses:
+  kpoint:
+    name: kpoint_focal
+    params:
+      clamp: 0.0001
+      weight: 1.
+
+  side:
+    name: masked_focal
+    params:
+      activation: sigmoid
+      weight: 0.5
+
+  size:
+    name: regr_loss
+    params:
+      distance: l1
+      activation: sigmoid
+      weight: 500.
+
+metric:
+  threshold_kpoint_prob: 0.4
+  threshold_iou: 0.5
+  max_bbox_per_img: 5
+
+learning_rate: &LR 0.0005
+
+optimizer:
+  name: adam
+  lr: *LR
+
+reduce_on_plateau:
+  mode: min
+  patience: 10
+  factor: 0.5
+  min_lr: 0.0000001
+
+epochs: 1000
+batch_size: 16
+freeze_epochs: 3
+val_batch_size: 32
+
+gpus: 1
+workers: 24
+check_val_every_n_epoch: 1
