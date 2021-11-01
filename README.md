@@ -1,5 +1,8 @@
 # Heyoh Object Detection / Tracking pipeline
-Heyoh is an open source virtual camera based on PyTorch. It is a training and inference code for [heyoh-camera](https://github.com/heyoh-app/heyoh-camera) app. 
+Heyoh is an open source virtual camera based on PyTorch. It is a training and inference code for [heyoh-camera](https://github.com/heyoh-app/heyoh-camera) app. [Github project page.](https://heyoh-app.github.io/heyoh-project-page/)
+<p align="center">
+<img src="https://raw.githubusercontent.com/heyoh-app/heyoh-project-page/main/docs/images/demo.gif" alt="drawing" width="450"/>
+</p>
 
 Contributors:
 Marko Kostiv, Danylo Bondar, Oleh Sehelin, Ksenia Demska
